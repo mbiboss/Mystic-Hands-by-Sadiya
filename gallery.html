@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Same head content as index.html -->
+    <title>Gallery | Mystic Hands Henna Artistry</title>
+    <meta name="description" content="Explore Sadiya's portfolio of bridal, festival, and contemporary henna designs">
+</head>
+<body>
+    <!-- Reuse navigation from index.html -->
+
+    <!-- Gallery Hero -->
+    <header class="page-hero gallery-hero">
+        <div class="container">
+            <h1 class="text-reveal">Design <span>Gallery</span></h1>
+            <p class="fade-in">A visual journey through our signature styles</p>
+        </div>
+    </header>
+
+    <!-- Gallery Filters -->
+    <section class="gallery-controls">
+        <div class="container">
+            <div class="filter-group">
+                <button class="filter-btn active" data-filter="all">All Works</button>
+                <button class="filter-btn" data-filter="bridal">Bridal</button>
+                <button class="filter-btn" data-filter="festival">Festival</button>
+                <button class="filter-btn" data-filter="modern">Modern</button>
+                <button class="filter-btn" data-filter="custom">Custom</button>
+            </div>
+            
+            <div class="view-options">
+                <button class="view-btn active" data-view="grid" aria-label="Grid view">
+                    <i class="fas fa-th"></i>
+                </button>
+                <button class="view-btn" data-view="masonry" aria-label="Masonry view">
+                    <i class="fas fa-th-large"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Gallery -->
+    <section class="main-gallery">
+        <div class="container">
+            <div class="gallery-container" id="gallery-container">
+                <!-- Items loaded via JS -->
+            </div>
+            
+            <div class="gallery-load-more">
+                <button id="load-more" class="cta-btn outline">
+                    <span>Load More</span>
+                    <i class="fas fa-spinner hidden"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox Modal -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" aria-label="Close lightbox">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="lightbox-content">
+            <img src="" alt="" id="lightbox-image">
+            <div class="lightbox-caption">
+                <h3 id="lightbox-title"></h3>
+                <p id="lightbox-desc"></p>
+            </div>
+        </div>
+        <button class="lightbox-nav prev" aria-label="Previous image">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="lightbox-nav next" aria-label="Next image">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-card">
+                <div class="cta-content">
+                    <h2>Inspired by What <span>You See?</span></h2>
+                    <p>Let's create something unique for you</p>
+                    <a href="booking.html" class="cta-btn pulse">Book Your Session</a>
+                </div>
+                <div class="cta-pattern">
+                    <img src="assets/henna-pattern-3.svg" alt="Decorative pattern" aria-hidden="true">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reuse footer from index.html -->
+
+    <!-- Gallery Script -->
+    <script src="js/gallery.js" defer></script>
+</body>
+</html>
