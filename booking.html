@@ -82,50 +82,61 @@
                         <span class="form-error"></span>
                     </div>
                     
-                    <h3 class="form-section-title">Personal Details</h3>
-                    
-                    <div class="form-group">
-                        <input type="text" id="name" name="name" class="form-input" required placeholder=" ">
-<label for="name" class="animated-label">Full Name</label>
-                        <span class="form-error"></span>
-                    </div>
-                    
-                    <div class="form-group">
-                        <input type="email" id="email" name="email" class="form-input" required placeholder=" ">
-<label for="email" class="animated-label">Email Address</label>
-                        <span class="form-error"></span>
-                    </div>
-                    
-                    <div class="form-group">
-                        <input type="tel" id="phone" name="phone" class="form-input" required placeholder=" ">
-<label for="phone" class="animated-label">Phone Number</label>
-                        <span class="form-error"></span>
-                    </div>
-                    
-                    <h3 class="form-section-title">Appointment Details</h3>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="date" class="animated-label">Preferred Date</label>
-                            <input type="date" id="date" name="date" class="form-input" required>
-                            <span class="form-error"></span>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="time" class="animated-label">Preferred Time</label>
-                            <input type="time" id="time" name="time" class="form-input" required>
-                            <span class="form-error"></span>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="message" class="animated-label">Additional Information</label>
-                        <textarea id="message" name="message" class="form-input" rows="4"></textarea>
-                        <span class="form-error"></span>
-                    </div>
-                    
-                    <button type="submit" class="btn btn-primary glow-on-hover">Submit Booking Request</button>
-                </form>
+    <h3 class="form-section-title neon-title">Personal Details</h3>
+    
+    <div class="form-group floating-input">
+        <input type="text" id="name" name="name" class="form-input" required>
+        <label for="name" class="floating-label">Full Name</label>
+        <span class="focus-border"></span>
+        <span class="form-error"></span>
+    </div>
+    
+    <div class="form-group floating-input">
+        <input type="email" id="email" name="email" class="form-input" required>
+        <label for="email" class="floating-label">Email Address</label>
+        <span class="focus-border"></span>
+        <span class="form-error"></span>
+    </div>
+    
+    <div class="form-group floating-input">
+        <input type="tel" id="phone" name="phone" class="form-input" required>
+        <label for="phone" class="floating-label">Phone Number</label>
+        <span class="focus-border"></span>
+        <span class="form-error"></span>
+    </div>
+    
+    <h3 class="form-section-title neon-title">Appointment Details</h3>
+    
+    <div class="form-row">
+        <div class="form-group floating-input datepicker">
+            <input type="date" id="date" name="date" class="form-input" required>
+            <label for="date" class="floating-label">Preferred Date</label>
+            <span class="focus-border"></span>
+            <span class="form-error"></span>
+            <i class="calendar-icon"></i>
+        </div>
+        
+        <div class="form-group floating-input timepicker">
+            <input type="time" id="time" name="time" class="form-input" required>
+            <label for="time" class="floating-label">Preferred Time</label>
+            <span class="focus-border"></span>
+            <span class="form-error"></span>
+            <i class="clock-icon"></i>
+        </div>
+    </div>
+    
+    <div class="form-group floating-input">
+        <textarea id="message" name="message" class="form-input" rows="4"></textarea>
+        <label for="message" class="floating-label">Additional Information</label>
+        <span class="focus-border"></span>
+        <span class="form-error"></span>
+    </div>
+    
+    <button type="submit" class="btn btn-submit holographic-btn">
+        <span class="btn-text">Submit Booking Request</span>
+        <span class="btn-hover-effect"></span>
+    </button>
+</form>
                 
                 <div id="booking-success" class="booking-success">
                     <div class="success-icon">
