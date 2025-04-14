@@ -1,98 +1,164 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <!-- Same head content as index.html -->
-    <title>Gallery | Mystic Hands Henna Artistry</title>
-    <meta name="description" content="Explore Sadiya's portfolio of bridal, festival, and contemporary henna designs">
-</head>
-<body>
-    <!-- Reuse navigation from index.html -->
-
-    <!-- Gallery Hero -->
-    <header class="page-hero gallery-hero">
-        <div class="container">
-            <h1 class="text-reveal">Design <span>Gallery</span></h1>
-            <p class="fade-in">A visual journey through our signature styles</p>
+<section id="gallery" class="gallery-section">
+    <div class="container">
+        <h1 class="section-title fade-in">Design Gallery</h1>
+        
+        <div class="gallery-filter fade-in">
+            <button class="filter-btn active" data-filter="all">All Designs</button>
+            <button class="filter-btn" data-filter="bridal">Bridal</button>
+            <button class="filter-btn" data-filter="traditional">Traditional</button>
+            <button class="filter-btn" data-filter="modern">Modern</button>
+            <button class="filter-btn" data-filter="events">Special Events</button>
         </div>
-    </header>
-
-    <!-- Gallery Filters -->
-    <section class="gallery-controls">
-        <div class="container">
-            <div class="filter-group">
-                <button class="filter-btn active" data-filter="all">All Works</button>
-                <button class="filter-btn" data-filter="bridal">Bridal</button>
-                <button class="filter-btn" data-filter="festival">Festival</button>
-                <button class="filter-btn" data-filter="modern">Modern</button>
-                <button class="filter-btn" data-filter="custom">Custom</button>
+        
+        <div class="gallery-grid">
+            <!-- Gallery items will be dynamically generated -->
+            <!-- Replace the colored backgrounds with PNG images in assets/images/ folder -->
+            <div class="gallery-item fade-in" data-category="bridal">
+                <div class="gallery-image" style="background-color: #9D7553; display: flex; justify-content: center; align-items: center;">
+                    <span style="color: white; font-size: 14px;">bridal-elegance.png</span>
+                    <div class="image-overlay">
+                        <div class="overlay-content">
+                            <h3>Bridal Elegance</h3>
+                            <p>Intricate full-hand design with peacock motifs</p>
+                        </div>
+                    </div>
+                </div>
             </div>
             
-            <div class="view-options">
-                <button class="view-btn active" data-view="grid" aria-label="Grid view">
-                    <i class="fas fa-th"></i>
-                </button>
-                <button class="view-btn" data-view="masonry" aria-label="Masonry view">
-                    <i class="fas fa-th-large"></i>
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Main Gallery -->
-    <section class="main-gallery">
-        <div class="container">
-            <div class="gallery-container" id="gallery-container">
-                <!-- Items loaded via JS -->
+            <div class="gallery-item fade-in" data-category="bridal">
+                <div class="gallery-image" style="background-color: #A67B5B;">
+                    <div class="image-overlay">
+                        <div class="overlay-content">
+                            <h3>Wedding Bliss</h3>
+                            <p>Traditional bridal design with modern elements</p>
+                        </div>
+                    </div>
+                </div>
             </div>
             
-            <div class="gallery-load-more">
-                <button id="load-more" class="cta-btn outline">
-                    <span>Load More</span>
-                    <i class="fas fa-spinner hidden"></i>
-                </button>
+            <div class="gallery-item fade-in" data-category="modern">
+                <div class="gallery-image" style="background-color: #C2A284;">
+                    <div class="image-overlay">
+                        <div class="overlay-content">
+                            <h3>Contemporary Flow</h3>
+                            <p>Minimalist design with flowing elements</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="gallery-item fade-in" data-category="traditional">
+                <div class="gallery-image" style="background-color: #B89F8D;">
+                    <div class="image-overlay">
+                        <div class="overlay-content">
+                            <h3>Heritage</h3>
+                            <p>Classic Rajasthani patterns with paisleys</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="gallery-item fade-in" data-category="events">
+                <div class="gallery-image" style="background-color: #DBC1A4;">
+                    <div class="image-overlay">
+                        <div class="overlay-content">
+                            <h3>Celebration</h3>
+                            <p>Festive design for Eid celebration</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="gallery-item fade-in" data-category="modern">
+                <div class="gallery-image" style="background-color: #A58D7F;">
+                    <div class="image-overlay">
+                        <div class="overlay-content">
+                            <h3>Geometric Harmony</h3>
+                            <p>Modern design with geometric patterns</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="gallery-item fade-in" data-category="traditional">
+                <div class="gallery-image" style="background-color: #836C5C;">
+                    <div class="image-overlay">
+                        <div class="overlay-content">
+                            <h3>Timeless</h3>
+                            <p>Traditional mandala with intricate details</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="gallery-item fade-in" data-category="bridal">
+                <div class="gallery-image" style="background-color: #D4B59E;">
+                    <div class="image-overlay">
+                        <div class="overlay-content">
+                            <h3>Royal Touch</h3>
+                            <p>Full-arm bridal design with royal elements</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="gallery-item fade-in" data-category="events">
+                <div class="gallery-image" style="background-color: #BEA89A;">
+                    <div class="image-overlay">
+                        <div class="overlay-content">
+                            <h3>Festive Joy</h3>
+                            <p>Lightweight design for special celebrations</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="gallery-item fade-in" data-category="modern">
+                <div class="gallery-image" style="background-color: #CAB5A7;">
+                    <div class="image-overlay">
+                        <div class="overlay-content">
+                            <h3>Minimalist</h3>
+                            <p>Clean lines with contemporary aesthetic</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="gallery-item fade-in" data-category="traditional">
+                <div class="gallery-image" style="background-color: #8D7666;">
+                    <div class="image-overlay">
+                        <div class="overlay-content">
+                            <h3>Cultural Heritage</h3>
+                            <p>Traditional design with cultural symbolism</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="gallery-item fade-in" data-category="events">
+                <div class="gallery-image" style="background-color: #AD9684;">
+                    <div class="image-overlay">
+                        <div class="overlay-content">
+                            <h3>Special Occasion</h3>
+                            <p>Elegant design for engagement ceremony</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </section>
-
-    <!-- Lightbox Modal -->
-    <div class="lightbox" id="lightbox">
-        <button class="lightbox-close" aria-label="Close lightbox">
-            <i class="fas fa-times"></i>
-        </button>
-        <div class="lightbox-content">
-            <img src="" alt="" id="lightbox-image">
-            <div class="lightbox-caption">
-                <h3 id="lightbox-title"></h3>
-                <p id="lightbox-desc"></p>
-            </div>
-        </div>
-        <button class="lightbox-nav prev" aria-label="Previous image">
-            <i class="fas fa-chevron-left"></i>
-        </button>
-        <button class="lightbox-nav next" aria-label="Next image">
-            <i class="fas fa-chevron-right"></i>
-        </button>
     </div>
-
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <div class="cta-card">
-                <div class="cta-content">
-                    <h2>Inspired by What <span>You See?</span></h2>
-                    <p>Let's create something unique for you</p>
-                    <a href="booking.html" class="cta-btn pulse">Book Your Session</a>
-                </div>
-                <div class="cta-pattern">
-                    <img src="assets/henna-pattern-3.svg" alt="Decorative pattern" aria-hidden="true">
-                </div>
+    
+    <!-- Lightbox -->
+    <div id="gallery-lightbox" class="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <div class="lightbox-content">
+            <div class="lightbox-image" style="background-color: #9D7553;"></div>
+            <div class="lightbox-caption">
+                <h3 class="lightbox-title">Image Title</h3>
+                <p class="lightbox-description">Image description goes here</p>
             </div>
         </div>
-    </section>
-
-    <!-- Reuse footer from index.html -->
-
-    <!-- Gallery Script -->
-    <script src="js/gallery.js" defer></script>
-</body>
-</html>
+        <button class="lightbox-nav prev" aria-label="Previous image"><i class="fas fa-chevron-left"></i></button>
+        <button class="lightbox-nav next" aria-label="Next image"><i class="fas fa-chevron-right"></i></button>
+    </div>
+</section>
