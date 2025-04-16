@@ -121,7 +121,35 @@ function setupContinuousAnimations() {
     createFloatingParticles();
 }
 
-// Create Floating Decorative Elements (Henna-inspired shapes, flowers and leaves)
+// Create Click Effect
+function createClickEffect(e) {
+    const clickParticle = document.createElement('div');
+    clickParticle.className = 'click-particle';
+    clickParticle.style.left = e.clientX + 'px';
+    clickParticle.style.top = e.clientY + 'px';
+    document.body.appendChild(clickParticle);
+    
+    setTimeout(() => {
+        clickParticle.remove();
+    }, 1000);
+}
+
+// Button Click Effect
+function createButtonEffect(button) {
+    const colors = ['#D2691E', '#8B4513', '#CD853F'];
+    for (let i = 0; i < 8; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'button-particle';
+        particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        button.appendChild(particle);
+        
+        setTimeout(() => {
+            particle.remove();
+        }, 1000);
+    }
+}
+
+// Create Floating Decorative Elements (Henna-inspired shapes)
 function createFloatingParticles() {
     // Create container if it doesn't exist
     let container = document.getElementById('particles-js');
