@@ -1,447 +1,243 @@
 // Booking JavaScript for Mystic Hands by Sadiya
+const BookingSystem = {
+    config: {
+        emailjs: {
+            publicKey: "43uQhQL2JyBnvUTsO",
+            serviceId: 'service_zv4zy43',
+            templateId: 'template_h99nwgv',
+            adminEmail: 'Ooismailforajioo@gmail.com'
+        }
+    },
 
-// Initialize booking functionality when booking page loads
-function initBookingForm() {
-    console.log('Booking form functionality initialized');
+    init() {
+        if (typeof emailjs !== 'undefined') {
+            emailjs.init(this.config.emailjs.publicKey);
+        }
 
-    // Setup form validation
-    setupFormValidation();
+        this.setupFormValidation();
+        this.setupFormSubmission();
+        this.setupDateTimePickers();
+        window.Animations.setupFormAnimations();
+    },
 
-    // Setup form animations
-    setupFormAnimations();
+    setupFormValidation() {
+        const validators = {
+            name: value => value.length >= 2 || 'Name must be at least 2 characters',
+            email: value => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) || 'Invalid email address',
+            phone: value => /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/.test(value) || 'Invalid phone number',
+            date: value => new Date(value) > new Date() || 'Date must be in the future',
+            time: value => value.length > 0 || 'Please select a time',
+            service: value => value.length > 0 || 'Please select a service'
+        };
+
+        Object.entries(validators).forEach(([field, input]) => {
+            const inputElement = document.getElementById(field);
+            if (!inputElement) return;
+
+            inputElement.addEventListener('blur', () => {
+                const result = validators[field](inputElement.value.trim());
+                this.handleValidation(inputElement, result === true ? null : result);
+            });
+        });
+    },
+
+    handleValidation(input, errorMessage) {
+        const errorElement = input.nextElementSibling;
+        if (!errorElement) return;
+
+        if (errorMessage) {
+            input.classList.add('error');
+            errorElement.textContent = errorMessage;
+            errorElement.style.display = 'block';
+        } else {
+            input.classList.remove('error');
+            errorElement.textContent = '';
+            errorElement.style.display = 'none';
+        }
+    },
+
+    setupFormSubmission() {
+        const form = document.getElementById('booking-form');
+        if (!form) return;
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const submitButton = form.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+            submitButton.textContent = 'Sending...';
+
+            try {
+                const formData = new FormData(form);
+                const data = Object.fromEntries(formData);
+
+                await this.sendBookingEmail(data);
+                await this.sendConfirmationEmail(data);
+
+                this.showSuccessMessage(data);
+                form.reset();
+            } catch (error) {
+                console.error('Booking failed:', error);
+                alert('Sorry, there was an error sending your booking. Please try again or contact us directly.');
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = 'Begin Your Henna Journey ✧';
+            }
+        });
+    },
+
+    async sendBookingEmail(data) {
+        return emailjs.send(this.config.emailjs.serviceId, this.config.emailjs.templateId, {
+            to_email: this.config.emailjs.adminEmail,
+            to_name: data.name,
+            from_name: 'Mystic Hands',
+            service_name: data.service,
+            booking_date: data.date,
+            booking_time: data.time,
+            customer_phone: data.phone,
+            customer_email: data.email,
+            customer_message: data.message || 'No message provided',
+            reply_to: this.config.emailjs.adminEmail
+        });
+    },
+
+    async sendConfirmationEmail(data) {
+        return emailjs.send(this.config.emailjs.serviceId, 'template_confirmation', {
+            to_email: data.email,
+            to_name: data.name,
+            service: data.service,
+            date: data.date,
+            time: data.time
+        });
+    },
+
+    showSuccessMessage(data) {
+        const form = document.getElementById('booking-form');
+        const successMessage = document.getElementById('booking-success');
+		const newBookingBtn = document.getElementById('new-booking-btn');
+
+        if (!form || !successMessage) return;
+
+        const formattedDate = new Date(data.date).toLocaleDateString();
+
+        document.querySelector('#booking-success h3').innerHTML = '✧ Booking Confirmed! ✧';
+        document.querySelector('#booking-success p').innerHTML = `
+            Thank you ${data.name}!<br><br>
+            Your ${data.service} booking has been confirmed for:<br>
+            Date: ${formattedDate}<br>
+            Time: ${data.time}<br><br>
+            A confirmation email has been sent to ${data.email}
+        `;
+
+        form.style.display = 'none';
+        successMessage.style.display = 'block';
+
+		if (newBookingBtn) {
+            newBookingBtn.addEventListener('click', function() {
+                successMessage.style.display = 'none';
+                form.style.display = 'block';
+                form.reset();
+            });
+        }
+    },
+
+    setupDateTimePickers() {
+        const dateInput = document.getElementById('date');
+        const timeInput = document.getElementById('time');
+
+        if (dateInput) {
+            const today = new Date().toISOString().split('T')[0];
+            const maxDate = new Date();
+            maxDate.setMonth(maxDate.getMonth() + 6);
+
+            dateInput.setAttribute('min', today);
+            dateInput.setAttribute('max', maxDate.toISOString().split('T')[0]);
+        }
+
+        if (timeInput) {
+            timeInput.setAttribute('min', '09:00');
+            timeInput.setAttribute('max', '19:00');
+        }
+    }
+};
+
+// Initialize booking system on DOM load
+document.addEventListener('DOMContentLoaded', () => {
+	BookingSystem.init();
 
     // Setup FAQ accordions
     const faqItems = document.querySelectorAll('.faq-item');
-    
     faqItems.forEach(item => {
         const question = item.querySelector('.faq-question');
         const answer = item.querySelector('.faq-answer');
-        
+
         if (question && answer) {
-            question.addEventListener('click', () => {
-                // Close all other FAQs
-                faqItems.forEach(otherItem => {
-                    if (otherItem !== item) {
-                        otherItem.classList.remove('active');
-                        const otherAnswer = otherItem.querySelector('.faq-answer');
-                        if (otherAnswer) {
-                            otherAnswer.style.maxHeight = null;
-                        }
-                    }
-                });
-                
-                // Toggle current FAQ
-                item.classList.toggle('active');
-                if (item.classList.contains('active')) {
-                    answer.style.maxHeight = answer.scrollHeight + "px";
-                } else {
-                    answer.style.maxHeight = null;
+            question.addEventListener('click', (e) => {
+                e.preventDefault();
+                const rect = answer.getBoundingClientRect();
+                const isVisible = (rect.top >= 0) && (rect.bottom <= window.innerHeight);
+
+                if (!isVisible) {
+                    item.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }
             });
         }
     });
-}
-
-// Initialize Date and Time Pickers with Restrictions
-function initDateTimePickers() {
-    const dateInput = document.getElementById('date');
-    const timeInput = document.getElementById('time');
-
-    if (dateInput) {
-        // Set min date to today
-        const today = new Date().toISOString().split('T')[0];
-        dateInput.setAttribute('min', today);
-
-        // Set max date to 6 months from now
-        const maxDate = new Date();
-        maxDate.setMonth(maxDate.getMonth() + 6);
-        const maxDateString = maxDate.toISOString().split('T')[0];
-        dateInput.setAttribute('max', maxDateString);
-    }
-
-    if (timeInput) {
-        // Set min and max time (9am - 7pm)
-        timeInput.setAttribute('min', '09:00');
-        timeInput.setAttribute('max', '19:00');
-    }
-}
-
-// If the page is loaded directly (not via SPA navigation)
-document.addEventListener('DOMContentLoaded', function() {
-    if (window.location.hash === '#booking') {
-        initBookingForm();
-    }
-});
-
-// Add click effect to consultation button
-document.querySelector('.booking-submit').addEventListener('click', function(e) {
-    createButtonEffect(this);
-    for(let i = 0; i < 8; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'button-particle';
-        particle.style.setProperty('--x', (Math.random() * 200 - 100) + 'px');
-        particle.style.setProperty('--y', (Math.random() * 200 - 100) + 'px');
-        this.appendChild(particle);
-    }
 });
 
 // Add click effect to all buttons
-document.addEventListener('click', createClickEffect);
-
-function createButtonEffect(button) {
-  // Add your button effect logic here.  This is a placeholder.
-  console.log("Button effect triggered!");
-}
+document.removeEventListener('click', createClickEffect);
 
 function createClickEffect(event) {
   // Add your click effect logic here. This is a placeholder.
   console.log("Click effect triggered!");
 }
 
-// Setup Form Validation
-function setupFormValidation() {
-    const bookingForm = document.getElementById('booking-form');
+window.Animations = {
+	setupFormAnimations() {
+		const formInputs = document.querySelectorAll('.form-input');
 
-    if (!bookingForm) return;
+		formInputs.forEach(input => {
+			// Add focus animation
+			input.addEventListener('focus', function() {
+				this.classList.add('focused');
 
-    // Form elements
-    const nameInput = document.getElementById('name');
-    const emailInput = document.getElementById('email');
-    const phoneInput = document.getElementById('phone');
-    const dateInput = document.getElementById('date');
-    const timeInput = document.getElementById('time');
-    const serviceInput = document.getElementById('service');
-    const messageInput = document.getElementById('message');
+				// Move the label up if it exists
+				const label = this.previousElementSibling;
+				if (label && label.classList.contains('animated-label')) {
+					label.classList.add('active');
+				}
+			});
 
-    // Success message element
-    const successMessage = document.getElementById('booking-success');
+			// Remove focus animation
+			input.addEventListener('blur', function() {
+				this.classList.remove('focused');
 
-    // New booking button
-    const newBookingBtn = document.getElementById('new-booking-btn');
+				// Only move the label back if input is empty
+				const label = this.previousElementSibling;
+				if (label && label.classList.contains('animated-label') && this.value === '') {
+					label.classList.remove('active');
+				}
+			});
 
-    // Form submission handler
-    bookingForm.addEventListener('submit', function(e) {
-        e.preventDefault();
+			// Check initial state (if input has value)
+			if (input.value !== '') {
+				const label = this.previousElementSibling;
+				if (label && label.classList.contains('animated-label')) {
+					label.classList.add('active');
+				}
+			}
+		});
 
-        // Validate all fields
-        let isValid = true;
+		// Add subtle animation to submit button
+		const submitButton = document.querySelector('#booking-form button[type="submit"]');
+		if (submitButton) {
+			submitButton.addEventListener('mouseenter', function() {
+				this.classList.add('pulse');
+			});
 
-        // Name validation
-        if (!validateName(nameInput)) {
-            isValid = false;
-        }
-
-        // Email validation
-        if (!validateEmail(emailInput)) {
-            isValid = false;
-        }
-
-        // Phone validation
-        if (!validatePhone(phoneInput)) {
-            isValid = false;
-        }
-
-        // Date validation
-        if (!validateDate(dateInput)) {
-            isValid = false;
-        }
-
-        // Time validation
-        if (!validateTime(timeInput)) {
-            isValid = false;
-        }
-
-        // Service validation
-        if (!validateService(serviceInput)) {
-            isValid = false;
-        }
-
-        // If all fields are valid, show success message
-        if (isValid) {
-            // Call animation function from animations.js
-            if (window.Animations && window.Animations.animateFormSuccess) {
-                window.Animations.animateFormSuccess();
-            } else {
-                // Fallback if animations.js is not loaded
-                bookingForm.style.display = 'none';
-                successMessage.style.display = 'block';
-            }
-        }
-    });
-
-    // Reset form when "Make Another Booking" is clicked
-    if (newBookingBtn) {
-        newBookingBtn.addEventListener('click', function() {
-            bookingForm.reset();
-            successMessage.style.display = 'none';
-            bookingForm.style.display = 'flex';
-
-            // Reset all error messages
-            const errorElements = bookingForm.querySelectorAll('.form-error');
-            errorElements.forEach(element => {
-                element.textContent = '';
-                element.style.display = 'none';
-            });
-
-            // Reset form animations
-            setupFormAnimations();
-        });
-    }
-
-    // Real-time validation on input
-    if (nameInput) {
-        nameInput.addEventListener('input', function() {
-            validateName(this);
-        });
-    }
-
-    if (emailInput) {
-        emailInput.addEventListener('input', function() {
-            validateEmail(this);
-        });
-    }
-
-    if (phoneInput) {
-        phoneInput.addEventListener('input', function() {
-            validatePhone(this);
-        });
-    }
-
-    if (dateInput) {
-        dateInput.addEventListener('change', function() {
-            validateDate(this);
-        });
-    }
-
-    if (timeInput) {
-        timeInput.addEventListener('change', function() {
-            validateTime(this);
-        });
-    }
-
-    if (serviceInput) {
-        serviceInput.addEventListener('change', function() {
-            validateService(this);
-        });
-    }
-}
-
-// Validation Functions
-function validateName(input) {
-    if (!input) return false;
-
-    const errorElement = input.nextElementSibling;
-    const value = input.value.trim();
-
-    if (value === '') {
-        showError(input, errorElement, 'Please enter your name');
-        return false;
-    } else if (value.length < 2) {
-        showError(input, errorElement, 'Name must be at least 2 characters');
-        return false;
-    } else {
-        hideError(input, errorElement);
-        return true;
-    }
-}
-
-function validateEmail(input) {
-    if (!input) return false;
-
-    const errorElement = input.nextElementSibling;
-    const value = input.value.trim();
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (value === '') {
-        showError(input, errorElement, 'Please enter your email address');
-        return false;
-    } else if (!emailRegex.test(value)) {
-        showError(input, errorElement, 'Please enter a valid email address');
-        return false;
-    } else {
-        hideError(input, errorElement);
-        return true;
-    }
-}
-
-function validatePhone(input) {
-    if (!input) return false;
-
-    const errorElement = input.nextElementSibling;
-    const value = input.value.trim();
-    const phoneRegex = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/;
-
-    if (value === '') {
-        showError(input, errorElement, 'Please enter your phone number');
-        return false;
-    } else if (!phoneRegex.test(value)) {
-        showError(input, errorElement, 'Please enter a valid phone number');
-        return false;
-    } else {
-        hideError(input, errorElement);
-        return true;
-    }
-}
-
-function validateDate(input) {
-    if (!input) return false;
-
-    const errorElement = input.nextElementSibling;
-    const value = input.value;
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    const selectedDate = new Date(value);
-    selectedDate.setHours(0, 0, 0, 0);
-
-    // Set max date to 6 months from now
-    const maxDate = new Date();
-    maxDate.setMonth(maxDate.getMonth() + 6);
-
-    if (value === '') {
-        showError(input, errorElement, 'Please select a date');
-        return false;
-    } else if (selectedDate < today) {
-        showError(input, errorElement, 'Please select a date in the future');
-        return false;
-    } else if (selectedDate > maxDate) {
-        showError(input, errorElement, 'Please select a date within the next 6 months');
-        return false;
-    } else {
-        hideError(input, errorElement);
-        return true;
-    }
-}
-
-function validateTime(input) {
-    if (!input) return false;
-
-    const errorElement = input.nextElementSibling;
-    const value = input.value;
-
-    if (value === '') {
-        showError(input, errorElement, 'Please select a time');
-        return false;
-    } else {
-        // Parse the selected time
-        const [hours, minutes] = value.split(':').map(Number);
-
-        // Check if time is within business hours (9am - 7pm)
-        if (hours < 9 || hours >= 19) {
-            showError(input, errorElement, 'Please select a time between 9:00 AM and 7:00 PM');
-            return false;
-        } else {
-            hideError(input, errorElement);
-            return true;
-        }
-    }
-}
-
-function validateService(input) {
-    if (!input) return false;
-
-    const errorElement = input.nextElementSibling;
-    const value = input.value;
-
-    if (value === '' || value === null) {
-        showError(input, errorElement, 'Please select a service');
-        return false;
-    } else {
-        hideError(input, errorElement);
-        return true;
-    }
-}
-
-// Show Error Message
-function showError(input, errorElement, message) {
-    if (!errorElement) return;
-
-    input.classList.add('error');
-    errorElement.textContent = message;
-    errorElement.style.display = 'block';
-}
-
-// Hide Error Message
-function hideError(input, errorElement) {
-    if (!errorElement) return;
-
-    input.classList.remove('error');
-    errorElement.textContent = '';
-    errorElement.style.display = 'none';
-}
-
-// Setup Form Animations
-function setupFormAnimations() {
-    const formInputs = document.querySelectorAll('.form-input');
-
-    formInputs.forEach(input => {
-        // Add focus animation
-        input.addEventListener('focus', function() {
-            this.classList.add('focused');
-
-            // Move the label up if it exists
-            const label = this.previousElementSibling;
-            if (label && label.classList.contains('animated-label')) {
-                label.classList.add('active');
-            }
-        });
-
-        // Remove focus animation
-        input.addEventListener('blur', function() {
-            this.classList.remove('focused');
-
-            // Only move the label back if input is empty
-            const label = this.previousElementSibling;
-            if (label && label.classList.contains('animated-label') && this.value === '') {
-                label.classList.remove('active');
-            }
-        });
-
-        // Check initial state (if input has value)
-        if (input.value !== '') {
-            const label = input.previousElementSibling;
-            if (label && label.classList.contains('animated-label')) {
-                label.classList.add('active');
-            }
-        }
-    });
-
-    // Add subtle animation to submit button
-    const submitButton = document.querySelector('#booking-form button[type="submit"]');
-    if (submitButton) {
-        submitButton.addEventListener('mouseenter', function() {
-            this.classList.add('pulse');
-        });
-
-        submitButton.addEventListener('mouseleave', function() {
-            this.classList.remove('pulse');
-        });
-    }
-}
-
-
-// Setup FAQ Accordions
-function setupFAQAccordions() {
-    const faqItems = document.querySelectorAll('.faq-item');
-
-    faqItems.forEach(item => {
-        const question = item.querySelector('.faq-question');
-        const answer = item.querySelector('.faq-answer');
-
-        if (question) {
-            question.addEventListener('click', () => {
-                // Toggle active class
-                item.classList.toggle('active');
-
-                // Set max-height for animation
-                if (answer) {
-                    if (item.classList.contains('active')) {
-                        answer.style.maxHeight = answer.scrollHeight + "px";
-                    } else {
-                        answer.style.maxHeight = 0;
-                    }
-                }
-            });
-        }
-    });
+			submitButton.addEventListener('mouseleave', function() {
+				this.classList.remove('pulse');
+			});
+		}
+	}
 }

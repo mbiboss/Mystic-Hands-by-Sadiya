@@ -1,33 +1,49 @@
-// Main JavaScript for Mystic Hands by Sadiya
-
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('Mystic Hands by Sadiya - Application Initialized');
-    initApp();
-    initParticles();
-    setupEventListeners();
-
-    // Initialize current page based on hash
-    const currentPage = window.location.hash.substring(1) || 'home';
-    navigateToPage(currentPage);
-    updateActiveLink(currentPage);
-});
-
-// Initialize Application
-function initApp() {
-    setupEventListeners();
-    initSPANavigation();
-    checkThemePreference();
-    observeAnimatedElements();
-    setupFAQAccordions();
-    setupTestimonialsCarousel();
+// Load footer
+async function loadFooter() {
+    try {
+        const response = await fetch('footer.html');
+        const html = await response.text();
+        const existingFooter = document.querySelector('footer');
+        if (!existingFooter) {
+            document.body.insertAdjacentHTML('beforeend', html);
+        }
+    } catch (error) {
+        console.error('Error loading footer:', error);
+    }
 }
 
+// Main JavaScript for Mystic Hands by Sadiya
+window.addEventListener('load', async function() {
+    console.log('Mystic Hands by Sadiya - Application Initialized');
+    await loadFooter();
+    setupEventListeners();
+    checkThemePreference();
+    observeAnimatedElements();
+    // Initialize current page based on hash or default to home
+    const initialPage = window.location.hash.substring(1) || 'home';
+    await navigateToPage(initialPage);
+    updateActiveLink(initialPage);
+});
+
+
 // Setup Event Listeners
+// Load images from HTML data attributes
+const floatingDesigns = document.querySelector('.floating-designs');
+if (floatingDesigns) {
+    window.BRIDAL_IMAGES = JSON.parse(floatingDesigns.dataset.bridalImages || '{}');
+    window.MODERN_IMAGES = JSON.parse(floatingDesigns.dataset.modernImages || '{}');
+    window.TRADITIONAL_IMAGES = JSON.parse(floatingDesigns.dataset.traditionalImages || '{}');
+    window.EVENTS_IMAGES = JSON.parse(floatingDesigns.dataset.eventsImages || '{}');
+    window.BRAND_IMAGES = JSON.parse(floatingDesigns.dataset.brandImages || '{}');
+}
+
 function setupEventListeners() {
     try {
         // Mobile Menu Toggle
         const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-        if (mobileMenuBtn) {
+        const navMenu = document.querySelector('.nav-menu');
+
+        if (mobileMenuBtn && navMenu) {
             mobileMenuBtn.addEventListener('click', toggleMobileMenu);
         }
 
@@ -66,6 +82,21 @@ function setupEventListeners() {
         if (faqItems.length > 0) {
             setupFAQAccordions();
         }
+
+        // Add click effect to consultation button
+        const bookingSubmit = document.querySelector('.booking-submit');
+        if (bookingSubmit) {
+            bookingSubmit.addEventListener('click', function(e) {
+                createButtonEffect(this);
+                for(let i = 0; i < 8; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'button-particle';
+                    particle.style.setProperty('--x', (Math.random() * 200 - 100) + 'px');
+                    particle.style.setProperty('--y', (Math.random() * 200 - 100) + 'px');
+                    this.appendChild(particle);
+                }
+            });
+        }
     } catch (error) {
         console.error('Error in setupEventListeners:', error);
     }
@@ -76,7 +107,7 @@ function initParticles() {
     if (typeof particlesJS !== 'undefined') {
         particlesJS('particles-js', {
             particles: {
-                number: { value: 30, density: { enable: true, value_area: 1000 } },
+                number: { value: 80, density: { enable: true, value_area: 1500 } },
                 color: { value: '#D2691E' },
                 opacity: {
                     value: 0.3,
@@ -194,63 +225,49 @@ function handleSPANavigation(e) {
 }
 
 // Navigate to Page
-function navigateToPage(pageName) {
+async function navigateToPage(pageName) {
     if (!pageName) return;
 
     const contentContainer = document.querySelector('main');
     if (!contentContainer) return;
 
-    if (pageName === 'home') {
-        fetch('index.html')
-            .then(response => response.text())
-            .then(html => {
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = html;
-                const mainContent = tempDiv.querySelector('main').innerHTML;
-                contentContainer.innerHTML = mainContent;
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                observeAnimatedElements();
-                initPageScripts('home');
-            });
-        return;
-    }
-
-    fetch(`${pageName}.html`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Page not found');
+    try {
+        if (pageName === 'home') {
+            // For home page, load index.html
+            const response = await fetch('index.html');
+            const html = await response.text();
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = html;
+            const mainContent = tempDiv.querySelector('main');
+            if (mainContent) {
+                contentContainer.innerHTML = mainContent.innerHTML;
             }
-            return response.text();
-        })
-        .then(html => {
+        } else {
+            const response = await fetch(`${pageName}.html`);
+            if (!response.ok) throw new Error('Page not found');
+            const html = await response.text();
             const tempDiv = document.createElement('div');
             tempDiv.innerHTML = html;
             const newContent = tempDiv.querySelector('section');
-
             if (newContent) {
-                // Remove all existing animation classes before adding new content
-                const existingElements = contentContainer.querySelectorAll('.fade-in, .slide-left, .slide-right, .scale-in');
-                existingElements.forEach(element => {
-                    element.classList.remove('active');
-                });
-                
                 contentContainer.innerHTML = newContent.outerHTML;
-                
-                // Only initialize page-specific scripts
-                initPageScripts(pageName);
-                observeAnimatedElements();
             }
-        })
-        .catch(error => {
-            console.error('Error loading page:', error);
-            contentContainer.innerHTML = `
-                <div class="error-container">
-                    <h1>Page Not Found</h1>
-                    <p>Sorry, the requested page could not be loaded.</p>
-                    <a href="#home" class="btn btn-primary" data-page="home">Return Home</a>
-                </div>
-            `;
-        });
+        }
+
+        window.scrollTo(0, 0);
+        await loadFooter();
+        initPageScripts(pageName);
+        observeAnimatedElements();
+    } catch (error) {
+        console.error('Error loading page:', error);
+        contentContainer.innerHTML = `
+            <div class="error-container">
+                <h1>Page Not Found</h1>
+                <p>Sorry, the requested page could not be loaded.</p>
+                <a href="#home" class="btn btn-primary" data-page="home">Return Home</a>
+            </div>
+        `;
+    }
 }
 
 // Update Active Navigation Link
@@ -285,6 +302,7 @@ function initPageScripts(pageName) {
             break;
     }
 }
+
 
 // Observe Animated Elements
 function observeAnimatedElements() {
@@ -326,7 +344,7 @@ function setupTestimonialsCarousel() {
         testimonialContainer.addEventListener('mouseenter', () => {
             clearInterval(testimonialInterval);
         });
-        
+
         testimonialContainer.addEventListener('mouseleave', () => {
             testimonialInterval = setInterval(() => {
                 slideTestimonial('next');
@@ -362,23 +380,126 @@ function slideTestimonial(direction) {
 // Setup FAQ Accordions
 function setupFAQAccordions() {
     const faqItems = document.querySelectorAll('.faq-item');
+    if (!faqItems.length) return;
 
-    faqItems.forEach(item => {
+    faqItems.forEach((item, index) => {
         const question = item.querySelector('.faq-question');
         const answer = item.querySelector('.faq-answer');
+        const icon = item.querySelector('.faq-icon i');
 
-        if (question && answer) {
+        // Initial animation
+        item.style.opacity = '0';
+        item.style.transform = 'translateY(30px)';
+
+        setTimeout(() => {
+            item.style.opacity = '1';
+            item.style.transform = 'translateY(0)';
+            item.style.transition = 'all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)';
+        }, index * 150);
+
+        if (question) {
             question.addEventListener('click', () => {
-                // Toggle current FAQ
+                const currentActive = document.querySelector('.faq-item.active');
+                if (currentActive && currentActive !== item) {
+                    currentActive.classList.remove('active');
+                    const currentAnswer = currentActive.querySelector('.faq-answer');
+                    const currentIcon = currentActive.querySelector('.faq-icon i');
+                    if (currentAnswer) {
+                        currentAnswer.style.maxHeight = '0';
+                        currentAnswer.style.opacity = '0';
+                    }
+                    if (currentIcon) {
+                        currentIcon.style.transform = 'rotate(0deg)';
+                    }
+                }
+
                 item.classList.toggle('active');
 
-                // Animate answer height
+                if (answer) {
+                    if (item.classList.contains('active')) {
+                        answer.style.maxHeight = answer.scrollHeight + 'px';
+                        answer.style.opacity = '1';
+                        if (icon) {
+                            icon.style.transform = 'rotate(180deg)';
+                        }
+                    } else {
+                        answer.style.maxHeight = '0';
+                        answer.style.opacity = '0';
+                        if (icon) {
+                            icon.style.transform = 'rotate(0deg)';
+                        }
+                    }
+                }
+            });
+        }
+
+        if (question && answer) {
+            question.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                // Close all other FAQs
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item && otherItem.classList.contains('active')) {
+                        otherItem.classList.remove('active');
+                        const otherAnswer = otherItem.querySelector('.faq-answer');
+                        const otherIcon = otherItem.querySelector('.faq-icon i');
+                        if (otherAnswer) {
+                            otherAnswer.style.maxHeight = '0';
+                            otherAnswer.style.opacity = '0';
+                        }
+                        if (otherIcon) {
+                            otherIcon.style.transform = 'rotate(0deg)';
+                        }
+                    }
+                });
+
+                // Toggle current FAQ
+                item.classList.toggle('active');
                 if (item.classList.contains('active')) {
                     answer.style.maxHeight = answer.scrollHeight + "px";
-                    answer.style.opacity = "1";
+                    answer.style.opacity = '1';
+                    if (icon) {
+                        icon.style.transform = 'rotate(180deg)';
+                    }
                 } else {
-                    answer.style.maxHeight = "0";
-                    answer.style.opacity = "0";
+                    answer.style.maxHeight = '0';
+                    answer.style.opacity = '0';
+                    if (icon) {
+                        icon.style.transform = 'rotate(0deg)';
+                    }
+                }
+                e.preventDefault();
+                const category = item.closest('.faq-category');
+                const categoryItems = category.querySelectorAll('.faq-item');
+
+                // Close other items in the same category
+                categoryItems.forEach(otherItem => {
+                    if (otherItem !== item && otherItem.classList.contains('active')) {
+                        otherItem.classList.remove('active');
+                        const otherAnswer = otherItem.querySelector('.faq-answer');
+                        if (otherAnswer) {
+                            otherAnswer.style.maxHeight = '0';
+                            otherAnswer.style.opacity = '0';
+                        }
+                    }
+                });
+
+                // Toggle current FAQ
+                item.classList.toggle('active');
+                if (item.classList.contains('active')) {
+                    answer.style.maxHeight = answer.scrollHeight + "px";
+                    answer.style.opacity = '1';
+
+                    // Smooth scroll if answer is not fully visible
+                    const rect = answer.getBoundingClientRect();
+                    const isVisible = (rect.top >= 0) && (rect.bottom <= window.innerHeight);
+
+                    if (!isVisible) {
+                        item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                } else {
+                    answer.style.maxHeight = '0';
+                    answer.style.opacity = '0';
                 }
             });
         }
