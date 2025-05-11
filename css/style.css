@@ -320,6 +320,57 @@ header {
     box-shadow: var(--shadow-sm);
     backdrop-filter: blur(8px);
     transition: all var(--transition-normal);
+    animation: headerSlideDown 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes headerSlideDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.nav-link {
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-link::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-link:hover::before {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+.hero-section {
+    opacity: 0;
+    animation: fadeInScale 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
 }
 
 .dark-mode header {
@@ -639,6 +690,39 @@ main {
     background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
     color: white;
     border: none;
+    padding: 15px 35px;
+    border-radius: 30px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: var(--shadow-md);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-primary::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: rgba(255,255,255,0.2);
+    transform: rotate(45deg);
+    transition: all 0.6s;
+    opacity: 0;
+}
+
+.btn-primary:hover::after {
+    opacity: 1;
+    transform: rotate(45deg) translate(50%, 50%);
 }
 
 .btn-secondary {
@@ -967,8 +1051,7 @@ main {
     text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
 }
 
-.hero-cta {
-    display: flex;
+.hero-cta {    display: flex;
     gap: var(--space-md);
     justify-content: center;
     margin-top: var(--space-lg);
@@ -1196,7 +1279,26 @@ main {
     padding: var(--space-md);
     opacity: 0;
     visibility: hidden;
-    transition: opacity var(--transition-normal), visibility var(--transition-normal);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateY(20px) scale(0.95);
+}
+
+.testimonial-card.active {
+    position: relative;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
+.testimonial-content {
+    transition: all 0.4s ease;
+    transform: perspective(1000px) rotateX(0deg);
+    backface-visibility: hidden;
+}
+
+.testimonial-content:hover {
+    transform: perspective(1000px) rotateX(5deg) scale(1.02);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
 }
 
 .testimonial-card.active {
@@ -1688,62 +1790,62 @@ blockquote {
 }
 
 .ingredients-section {
-    padding: var(--space-xl) 0;
+  padding: var(--space-xl) 0;
 }
 
 .ingredients-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-lg);
-    align-items: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+  align-items: center;
 }
 
 .ingredient-text p {
-    margin-bottom: var(--space-md);
+  margin-bottom: var(--space-md);
 }
 
 .ingredients-list {
-    margin-bottom: var(--space-md);
+  margin-bottom: var(--space-md);
 }
 
 .ingredients-list li {
-    margin-bottom: var(--space-xs);
-    display: flex;
-    align-items: baseline;
+  margin-bottom: var(--space-xs);
+  display: flex;
+  align-items: baseline;
 }
 
 .ingredients-list li::before {
-    content: "•";
-    color: var(--accent-color);
-    font-size: 1.5rem;
-    margin-right: var(--space-xs);
+  content: "•";
+  color: var(--accent-color);
+  font-size: 1.5rem;
+  margin-right: var(--space-xs);
 }
 
 .ingredients-list li span {
-    font-weight: 600;
-    color: var(--primary-color);
+  font-weight: 600;
+  color: var(--primary-color);
 }
 
+/* IMAGE STYLING */
 .ingredient-image {
-    position: relative;
+  max-width: 800px;
+  width: 100%;
+  aspect-ratio: 16 / 9;
 }
 
 .image-accent {
-    height: 400px;
-    background-color: var(--secondary-color);
-    border-radius: var(--radius-md);
-    position: relative;
+  width: 100%;
+  height: 100%;
+  background-image: url('https://i.postimg.cc/x1MVXJvd/Bridal-hanna-1.png');
+  background-size: cover;
+  background-position: center;
+  border-radius: 12px;
+  position: relative; /* Needed for ::before positioning */
+  overflow: hidden;
 }
 
 .image-accent::before {
-    content: "";
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    right: 20px;
-    bottom: 20px;
-    border: 2px solid var(--white);
-    border-radius: calc(var(--radius-md) - 10px);
+  display: none;
 }
 
 .cta-section {
@@ -1796,6 +1898,13 @@ blockquote {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: var(--space-md);
+    width: 100%;
+}
+
+.gallery-item {
+    width: 100%;
+    margin: 0;
+    display: block;
 }
 
 .gallery-item {
@@ -1809,6 +1918,11 @@ blockquote {
     height: 300px;
     width: 100%;
     transition: transform var(--transition-normal);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 .gallery-item:hover .gallery-image {
@@ -1875,11 +1989,53 @@ blockquote {
 }
 
 .lightbox-image {
-    width: 80vw;
-    height: 80vh;
-    max-width: 1200px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+}
+
+.lightbox-image-container {
+    position: relative;
+    display: inline-block;
+}
+
+.lightbox-image img {
+    max-width: 95vw;
+    max-height: 85vh;
     object-fit: contain;
     border-radius: var(--radius-md);
+    transition: all 0.3s ease;
+}
+
+.expand-btn {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.6);
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    opacity: 0;
+}
+
+.lightbox-image-container:hover .expand-btn {
+    opacity: 1;
+}
+
+.expand-btn:hover {
+    background: rgba(0, 0, 0, 0.8);
+    transform: scale(1.1);
+}
 }
 
 .lightbox-caption {
@@ -2321,23 +2477,174 @@ textarea.form-input {
     padding: var(--space-xl) 0;
     background: linear-gradient(135deg, var(--light-bg), var(--light-accent));
     margin: var(--space-xl) 0;
+    position: relative;
+    overflow: hidden;
+    border-radius: 30px;
+}
+
+.faq-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.faq-item {
+    background: rgba(255, 255, 255, 0.7);
+    margin-bottom: 15px;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(210,105,30,0.1);
+}
+
+.faq-question {
+    padding: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--heading-font);
+    color: var(--primary-color);
+    transition: all 0.3s ease;
+}
+
+.question-text {
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.faq-icon {
+    width: 24px;
+    height: 24px;
+    position: relative;
+    transition: transform 0.4s ease;
+}
+
+.faq-item.active {
+    background: rgba(210,105,30,0.05);
+    transform: translateX(10px);
+}
+
+.faq-answer {
+    padding: 0 1.2rem;
+    height: 0;
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    color: var(--secondary-color);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.faq-item.active .faq-answer {
+    height: auto;
+    padding: 0 1.2rem 1.2rem;
+    opacity: 1;
+}
+
+.faq-item.active .faq-icon {
+    transform: rotate(180deg);
+}
+
+.dark-mode .faq-container {
+    background: rgba(44,24,16,0.95);
+}
+
+.dark-mode .faq-item {
+    background: rgba(44,24,16,0.7);
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.faq-subtitle {
+    text-align: center;
+    color: var(--secondary-color);
+    font-size: 1.1rem;
+    margin-bottom: var(--space-xl);
 }
 
 .faq-wrapper {
     max-width: 800px;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
 }
 
 .faq-item {
     background: var(--white);
     border-radius: var(--radius-lg);
-    margin-bottom: var(--space-md);
     box-shadow: var(--shadow-md);
+    border: 1px solid rgba(210, 105, 30, 0.1);
     transition: all 0.3s ease;
+    overflow: hidden;
 }
 
 .dark-mode .faq-item {
     background: var(--dark-bg);
+    border-color: rgba(210, 105, 30, 0.2);
+}
+
+.faq-question {
+    width: 100%;
+    padding: var(--space-lg);
+    background: none;
+    border: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.3s ease;
+}
+
+.question-text {
+    font-size: 1.1rem;
+    color: var(--primary-color);
+    font-weight: 500;
+    flex: 1;
+    padding-right: var(--space-md);
+}
+
+.faq-icon {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.faq-icon i {
+    color: var(--accent-color);
+    transition: transform 0.3s ease;
+}
+
+.faq-item.active .faq-icon i {
+    transform: rotate(180deg);
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: rgba(210, 105, 30, 0.03);
+}
+
+.answer-content {
+    padding: 0 var(--space-lg) var(--space-lg);
+}
+
+.faq-item.active .faq-answer {
+    max-height: 1000px;
 }
 
 .faq-item:hover {
@@ -2345,61 +2652,12 @@ textarea.form-input {
     box-shadow: var(--shadow-lg);
 }
 
-.faq-question {
-    padding: var(--space-md);
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.faq-item.active {
+    border-left: 4px solid var(--accent-color);
 }
 
-.faq-question h3 {
-    margin: 0;
-    font-size: 1.1rem;
-    color: var(--primary-color);
-}
-
-.faq-toggle {
-    position: relative;
-    width: 20px;
-    height: 20px;
-}
-
-.faq-toggle i {
-    position: absolute;
-    top: 0;
-    left: 0;
-    transition: all 0.3s ease;
-    color: var(--accent-color);
-}
-
-.faq-toggle .fa-minus {
-    opacity: 0;
-    transform: rotate(-90deg);
-}
-
-.faq-item.active .faq-toggle .fa-plus {
-    opacity: 0;
-    transform: rotate(90deg);
-}
-
-.faq-item.active .faq-toggle .fa-minus {
-    opacity: 1;
-    transform: rotate(0);
-}
-
-.faq-answer {
-    padding: 0 var(--space-md);
-    max-height: 0;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    opacity: 0;
-}
-
-.faq-item.active .faq-answer {
-    padding: 0 var(--space-md) var(--space-md);
-    max-height: 300px;
-    opacity: 1;
+.faq-item.active .faq-question {
+    background: rgba(210, 105, 30, 0.05);
 }
 
 .faq-wrapper {
@@ -2648,28 +2906,24 @@ textarea.form-input {
     }
 }
 
-.btn-primary {
-    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-    color: var(--white);
-    padding: 15px 35px;
-    border-radius: 30px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    position: relative;
-    overflow: hidden;
+/* Button styles moved to Components.css */
+
+.btn-primary::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: rgba(255,255,255,0.2);
+    transform: rotate(45deg);
+    transition: all 0.6s;
+    opacity: 0;
 }
 
-.btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-    background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
-}
-
-.btn-primary:active {
-    transform: translateY(1px);
+.btn-primary:hover::after {
+    opacity: 1;
+    transform: rotate(45deg) translate(50%, 50%);
 }
 
 .booking-submit {
@@ -2682,7 +2936,7 @@ textarea.form-input {
     background: linear-gradient(135deg, var(--primary-color), var(--accent-color-2));
     border-radius: 30px;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    box-shadow: var(--shadow-md);
     border: none;
     color: var(--white);
     position: relative;
@@ -2743,9 +2997,43 @@ textarea.form-input {
     overflow: hidden;
     padding: 0 var(--space-md);
     opacity: 0;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     background: var(--light-bg);
     border-radius: 0 0 var(--radius-md) var(--radius-md);
+    transform-origin: top;
+}
+
+.faq-item {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--space-md);
+    box-shadow: var(--shadow-md);
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    border: 1px solid rgba(210, 105, 30, 0.1);
+    overflow: hidden;
+}
+
+.faq-item:hover {
+    transform: translateX(10px);
+    box-shadow: var(--shadow-lg);
+}
+
+.faq-question {
+    padding: var(--space-md) var(--space-lg);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.4s ease;
+}
+
+.faq-icon i {
+    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.faq-item.active .faq-answer {
+    padding: var(--space-md) var(--space-lg);
+    opacity: 1;
 }
 
 .dark-mode .faq-answer {
