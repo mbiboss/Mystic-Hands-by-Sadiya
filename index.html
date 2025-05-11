@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="color-scheme" content="light dark">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mystic Hands by Sadiya | Premium Henna Art</title>
     <meta name="description" content="Experience premium, luxurious henna art by Sadiya. Book appointments for bridal, special events, and personal sessions.">
@@ -13,6 +12,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/animations.css">
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
 <body class="light-mode">
     <div id="particles-js"></div>
@@ -22,39 +22,15 @@
         <i class="fab fa-whatsapp"></i>
     </a>
 
-    <header>
-        <div class="container">
-            <div class="logo">
-                <a href="#home" data-page="home" style="display: flex; align-items: center; gap: 15px;">
-                    <img src="assets/logo.png" alt="Mystic Hands Logo" class="logo-img" style="width: 50px; height: 50px;">
-                    <div class="logo-text-container">
-                        <h1 class="logo-title" style="font-family: 'Playfair Display', serif; font-size: 28px; margin: 0; background: linear-gradient(135deg, var(--primary-color), var(--accent-color)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">✧ Mystic Hands ✧</h1>
-                        <p class="logo-subtitle" style="font-family: 'Poppins', sans-serif; font-size: 16px; font-style: italic; margin: 0; background: linear-gradient(135deg, var(--accent-color), var(--secondary-color)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">⋆｡°✧ by Sadiya ✧°｡⋆</p>
-                    </div>
-                </a>
-            </div>
-            <nav>
-                <button class="mobile-menu-btn" aria-label="Toggle menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-                <ul class="nav-menu">
-                    <li><a href="#home" class="nav-link active" data-page="home"><i class="fas fa-home"></i> Home</a></li>
-                    <li><a href="#about" class="nav-link" data-page="about"><i class="fas fa-user"></i> About</a></li>
-                    <li><a href="#gallery" class="nav-link" data-page="gallery"><i class="fas fa-images"></i> Gallery</a></li>
-                    <li><a href="#testimonials" class="nav-link" data-page="testimonials"><i class="fas fa-comment-dots"></i> Testimonials</a></li>
-                    <li><a href="#booking" class="nav-link" data-page="booking"><i class="fas fa-calendar-alt"></i> Book Now</a></li>
-                    <li>
-                        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark/light mode">
-                            <i class="fas fa-moon"></i>
-                            <i class="fas fa-sun"></i>
-                        </button>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    <!-- Include Header -->
+    <div id="header-placeholder"></div>
+    <script>
+        fetch('header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+            });
+    </script>
 
     <main>
         <section id="home" class="hero-section">
@@ -75,26 +51,25 @@
                     </div>
                 </div>
                 <div class="hero-right">
-                    <div class="floating-designs">
-                        <div class="design-card">
-                            <img src="assets/images/logo.png" alt="Bridal Henna Design" class="design-img">
-                            <div class="design-overlay">
-                                <h3>Bridal Henna</h3>
+                            <div class="design-card">
+                                <img src="https://i.postimg.cc/d3jxvsyS/Art-1.jpg" alt="Bridal Henna Design" class="design-img">
+                                <div class="design-overlay">
+                                    <h3>Bridal Henna</h3>
+                                </div>
+                            </div>
+                            <div class="design-card">
+                                <img src="https://i.postimg.cc/ZY8g6cMF/Art-2.jpg" alt="Modern Fusion Design" class="design-img">
+                                <div class="design-overlay">
+                                    <h3>Modern Fusion</h3>
+                                </div>
+                            </div>
+                            <div class="design-card">
+                                <img src="https://i.postimg.cc/W1Wxh1fB/Art-3.jpg" alt="Traditional Art Design" class="design-img">
+                                <div class="design-overlay">
+                                    <h3>Traditional Art</h3>
+                                </div>
                             </div>
                         </div>
-                        <div class="design-card">
-                            <img src="assets/images/logo.png" alt="Modern Fusion Design" class="design-img">
-                            <div class="design-overlay">
-                                <h3>Modern Fusion</h3>
-                            </div>
-                        </div>
-                        <div class="design-card">
-                            <img src="assets/images/logo.png" alt="Traditional Art Design" class="design-img">
-                            <div class="design-overlay">
-                                <h3>Traditional Art</h3>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -142,7 +117,7 @@
                 <div class="gallery-preview">
                     <div class="preview-grid">
                         <div class="preview-item fade-in">
-                            <img src="assets/images/logo.png" alt="Henna Design 1">
+                            <img src="https://i.postimg.cc/QMFw5Z2H/Art-4.jpg" alt="Henna Design 1">
                             <div class="preview-overlay">
                                 <p>Intricate Bridal Design</p>
                             </div>
@@ -192,7 +167,7 @@
                     <div class="masterpiece-grid">
                         <div class="masterpiece-item fade-in">
                             <div class="masterpiece-image">
-                                <img src="assets/images/logo.png" alt="Bridal Henna Design">
+                                <img src="https://i.postimg.cc/Hk61X2jP/Art-5.jpg" alt="Bridal Henna Design">
                                 <div class="masterpiece-overlay">
                                     <h3>Bridal Collection</h3>
                                     <p>Elegant designs for your special day</p>
@@ -201,7 +176,7 @@
                         </div>
                         <div class="masterpiece-item fade-in">
                             <div class="masterpiece-image">
-                                <img src="assets/images/logo.png" alt="Modern Henna Design">
+                                <img src="https://i.postimg.cc/fThsNy65/Art-6.jpg" alt="Modern Henna Design">
                                 <div class="masterpiece-overlay">
                                     <h3>Modern Fusion</h3>
                                     <p>Contemporary patterns with traditional roots</p>
@@ -210,7 +185,7 @@
                         </div>
                         <div class="masterpiece-item fade-in">
                             <div class="masterpiece-image">
-                                <img src="assets/images/logo.png" alt="Traditional Henna Design">
+                                <img src="https://i.postimg.cc/hGNw13nM/Art-7.jpg" alt="Traditional Henna Design">
                                 <div class="masterpiece-overlay">
                                     <h3>Traditional Art</h3>
                                     <p>Timeless patterns and motifs</p>
@@ -271,6 +246,24 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="testimonial-card">
+                            <div class="testimonial-content">
+                                <p>"The attention to detail and creativity in my bridal henna was absolutely breathtaking. Sadiya made my special day even more magical!"</p>
+                                <div class="client-info">
+                                    <h4>Maya R.</h4>
+                                    <span>Bridal Henna</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="testimonial-card">
+                            <div class="testimonial-content">
+                                <p>"Not just an artist, but a true professional. The experience was relaxing and the results were stunning. Will definitely come back!"</p>
+                                <div class="client-info">
+                                    <h4>Nadia K.</h4>
+                                    <span>Special Occasion</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="testimonial-nav">
                         <button class="nav-btn prev" onclick="slideTestimonial('prev')"><i class="fas fa-chevron-left"></i></button>
@@ -279,126 +272,12 @@
                 </div>
             </section>
 
-            <!-- FAQ Section -->
-            <section class="faq-section fade-in">
-                <div class="container">
-                    <h2 class="section-title">Frequently Asked Questions</h2>
-                    <div class="faq-wrapper">
-                        <div class="faq-item">
-                            <div class="faq-question">
-                                <h3>What should I expect during my henna session?</h3>
-                                <span class="faq-toggle"><i class="fas fa-plus"></i><i class="fas fa-minus"></i></span>
-                            </div>
-                            <div class="faq-answer">
-                                <p>Your session will begin with a design consultation, followed by the application process. The paste needs to stay on for 4-6 hours for the best results. We recommend arriving with clean, oil-free skin for optimal staining.</p>
-                            </div>
-                        </div>
-                        <div class="faq-item">
-                            <div class="faq-question">
-                                <h3>How long does the henna stain last?</h3>
-                                <span class="faq-toggle"><i class="fas fa-plus"></i><i class="fas fa-minus"></i></span>
-                            </div>
-                            <div class="faq-answer">
-                                <p>The stain typically lasts 1-3 weeks depending on aftercare and placement. Peak color is usually achieved 48 hours after application. We provide detailed aftercare instructions to help maintain your design.</p>
-                            </div>
-                        </div>
-                        <div class="faq-item">
-                            <div class="faq-question">
-                                <h3>Are your henna products safe?</h3>
-                                <span class="faq-toggle"><i class="fas fa-plus"></i><i class="fas fa-minus"></i></span>
-                            </div>
-                            <div class="faq-answer">
-                                <p>Yes, we use 100% natural henna powder mixed with essential oils and natural ingredients. All our products are carefully sourced, tested, and safe for skin application. We never use chemical dyes or black henna.</p>
-                            </div>
-                        </div>
-                        <div class="faq-item">
-                            <div class="faq-question">
-                                <h3>Do you offer group bookings?</h3>
-                                <span class="faq-toggle"><i class="fas fa-plus"></i><i class="fas fa-minus"></i></span>
-                            </div>
-                            <div class="faq-answer">
-                                <p>Yes, we offer special packages for group bookings, perfect for bridal parties, festivals, and corporate events. Our group services include customized designs and competitive pricing for parties of 5 or more.</p>
-                            </div>
-                        </div>
-                        <div class="faq-item">
-                            <div class="faq-question">
-                                <h3>What's your booking and cancellation policy?</h3>
-                                <span class="faq-toggle"><i class="fas fa-plus"></i><i class="fas fa-minus"></i></span>
-                            </div>
-                            <div class="faq-answer">
-                                <p>We require a 25% deposit to secure your booking. Cancellations made 48 hours before the appointment receive a full refund. Last-minute cancellations may be subject to a cancellation fee.</p>
-                            </div>
-                        </div>
-                        <div class="faq-item">
-                            <div class="faq-question">
-                                <h3>Do you travel for events?</h3>
-                                <span class="faq-toggle"><i class="fas fa-plus"></i><i class="fas fa-minus"></i></span>
-                            </div>
-                            <div class="faq-answer">
-                                <p>Yes, we offer mobile services for events within the city limits. For destinations beyond, additional travel charges may apply. Contact us for a custom quote based on your location and requirements.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
-    </main>
-
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <div class="footer-logo">
-                        <img src="assets/images/logo.png" alt="Mystic Hands Logo" class="footer-logo-img">
-                        <div class="footer-brand-text">
-                            <h3>✧ Mystic Hands ✧</h3>
-                            <p>⋆｡°✧ by Sadiya ✧°｡⋆</p>
-                        </div>
-                    </div>
-                    <p class="footer-desc">Creating timeless henna masterpieces for your cherished moments. Premium designs crafted with love and dedication.</p>
-                </div>
-                <div class="footer-nav">
-                    <h4>Navigation</h4>
-                    <ul>
-                        <li><a href="#home" data-page="home">Home</a></li>
-                        <li><a href="#about" data-page="about">About</a></li>
-                        <li><a href="#gallery" data-page="gallery">Gallery</a></li>
-                        <li><a href="#testimonials" data-page="testimonials">Testimonials</a></li>
-                        <li><a href="#booking" data-page="booking">Book Now</a></li>
-                    </ul>
-                </div>
-                <div class="footer-connect">
-                    <h4>Connect With Us</h4>
-                    <div class="social-icons">
-                        <a href="#" aria-label="Instagram" class="social-icon"><i class="fab fa-instagram"></i></a>
-                        <a href="#" aria-label="Facebook" class="social-icon"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" aria-label="Pinterest" class="social-icon"><i class="fab fa-pinterest-p"></i></a>
-                        <a href="#" aria-label="Twitter" class="social-icon"><i class="fab fa-twitter"></i></a>
-                    </div>
-                    <div class="footer-contact">
-                        <p><i class="fas fa-envelope"></i> hello@mystichands.com</p>
-                        <p><i class="fas fa-phone"></i> +1 (234) 567-8901</p>
-                        <p><i class="fas fa-map-marker-alt"></i> Dhaka, Bangladesh</p>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-divider"></div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Mystic Hands by Sadiya. All rights reserved.</p>
-                <div class="footer-terms">
-                    <a href="#">Privacy Policy</a>
-                    <span class="separator">•</span>
-                    <a href="#">Terms of Service</a>
-                </div>
-            </div>
-        </div>
-    </footer>
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/animations.js"></script>
-    <script src="js/gallery.js"></script>
-    <script src="js/booking.js"></script>
+    <script src="js/main.js" type="module"></script>
+    <script src="js/animations.js" type="module"></script>
+    <script src="js/gallery.js" type="module"></script>
+    <script src="js/booking.js" type="module"></script>
 </body>
 </html>
