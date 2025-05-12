@@ -886,6 +886,20 @@ main {
 }
 
 @media screen and (max-width: 768px) {
+    :root {
+        --h1-size: 1.8rem;
+        --h2-size: 1.4rem;
+        --h3-size: 1.1rem;
+        --space-xl: 2rem;
+        --space-lg: 1.2rem;
+        --space-md: 0.8rem;
+        --space-sm: 0.5rem;
+    }
+
+    .container {
+        padding: 0 1rem;
+    }
+
     .hero-grid {
         grid-template-columns: 1fr;
     }
@@ -1546,14 +1560,67 @@ footer {
 }
 
 @media screen and (max-width: 768px) {
+    footer {
+        padding: 0.5rem 0;
+    }
+    
     .footer-content {
         grid-template-columns: 1fr;
-        gap: var(--space-xl);
+        gap: 0.3rem;
+        padding: 0.3rem 0;
     }
 
     .footer-brand {
         max-width: 100%;
         text-align: center;
+    }
+
+    .footer-logo-img {
+        width: 20px;
+        height: 20px;
+    }
+
+    .footer-brand-text h3 {
+        font-size: 0.8rem;
+        margin-bottom: 0;
+    }
+    
+    .footer-brand-text p {
+        font-size: 0.6rem;
+    }
+
+    .footer-desc {
+        font-size: 0.7rem;
+        margin-top: 0.2rem;
+    }
+
+    .social-icon {
+        width: 20px;
+        height: 20px;
+        font-size: 0.7rem;
+    }
+
+    .footer-nav, .footer-social, .footer-contact {
+        padding: 0.1rem 0;
+    }
+    
+    .footer-nav h4, .footer-connect h4 {
+        font-size: 0.8rem;
+        margin-bottom: 0.2rem;
+    }
+    
+    .footer-nav ul li a {
+        font-size: 0.7rem;
+    }
+    
+    .footer-contact p {
+        font-size: 0.7rem;
+        margin-bottom: 0.1rem;
+    }
+
+    .footer-bottom {
+        padding: 0.2rem 0;
+        font-size: 0.6rem;
     }
 
     .footer-logo {
@@ -2795,9 +2862,21 @@ textarea.form-input {
 
 @media screen and (max-width: 768px) {
     :root {
-        --h1-size: 2.2rem;
-        --h2-size: 1.8rem;
-        --space-xl: 3rem;
+        --h1-size: 1.8rem;
+        --h2-size: 1.4rem;
+        --h3-size: 1.1rem;
+        --space-xl: 2rem;
+        --space-lg: 1.2rem;
+        --space-md: 0.8rem;
+        --space-sm: 0.5rem;
+    }
+
+    .container {
+        padding: 0 1rem;
+    }
+
+    header {
+        padding: 0.5rem 0;
     }
 
     .mobile-menu-btn {
@@ -2808,15 +2887,95 @@ textarea.form-input {
         position: fixed;
         top: 0;
         right: -100%;
-        width: 70%;
+        width: 80%;
         height: 100vh;
-        background-color: var(--light-bg);
+        background: rgba(255, 248, 240, 0.95);
+        backdrop-filter: blur(10px);
         flex-direction: column;
-        align-items: center;
+        align-items: flex-start;
         justify-content: center;
         gap: var(--space-lg);
-        transition: right var(--transition-normal);
+        transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1);
         z-index: 100;
+        padding: 2rem;
+        box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+        transform: translateX(0);
+    }
+
+    .nav-menu.active {
+        right: 0;
+        transform: translateX(0);
+    }
+
+    .dark-mode .nav-menu {
+        background: rgba(42, 33, 29, 0.95);
+    }
+
+    .nav-menu .nav-link {
+        font-size: 1.2rem;
+        padding: 0.8rem;
+        width: 100%;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .nav-menu .nav-link:hover {
+        background: rgba(210, 105, 30, 0.1);
+        transform: translateX(10px);
+    }
+
+    .mobile-menu-btn {
+        width: 30px;
+        height: 24px;
+        position: relative;
+        cursor: pointer;
+        z-index: 150;
+    }
+
+    .mobile-menu-btn span {
+        display: block;
+        width: 100%;
+        height: 2px;
+        background: var(--primary-color);
+        position: absolute;
+        left: 0;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .mobile-menu-btn span:nth-child(1) {
+        top: 0;
+    }
+
+    .mobile-menu-btn span:nth-child(2) {
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .mobile-menu-btn span:nth-child(3) {
+        bottom: 0;
+    }
+
+    .mobile-menu-btn.active span:nth-child(1) {
+        top: 50%;
+        transform: translateY(-50%) rotate(45deg);
+    }
+
+    .mobile-menu-btn.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .mobile-menu-btn.active span:nth-child(3) {
+        bottom: 50%;
+        transform: translateY(50%) rotate(-45deg);
+    }
+
+    .logo-img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .logo-text {
+        font-size: 20px;
     }
 
     .dark-mode .nav-menu {
@@ -2842,28 +3001,118 @@ textarea.form-input {
     }
 
     .gallery-grid {
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 0.8rem;
+    }
+
+    .gallery-image {
+        height: 200px;
+    }
+
+    .preview-grid {
+        gap: 0.8rem;
+    }
+
+    .service-card {
+        padding: 0.8rem;
+    }
+
+    .service-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .service-icon i {
+        font-size: 1.2rem;
+    }
+
+    .testimonial-card {
+        padding: 1rem;
+    }
+
+    .testimonial-content {
+        font-size: 0.9rem;
+    }
+
+    .booking-form-container {
+        padding: 1rem;
+    }
+
+    .form-input {
+        padding: 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    .booking-features .feature-icon {
+        width: 32px;
+        height: 32px;
     }
 
     .footer-content {
         grid-template-columns: 1fr;
         gap: var(--space-md);
+        padding: 0.8rem 0;
+    }
+
+    .footer-brand {
+        max-width: 100%;
         text-align: center;
     }
 
-    .footer-links h4::after,
-    .footer-social h4::after,
-    .footer-contact h4::after {
+    .footer-logo-img {
+        width: 32px;
+        height: 32px;
+    }
+
+    .footer-brand-text h3 {
+        font-size: 1rem;
+    }
+
+    .social-icon {
+        width: 28px;
+        height: 28px;
+    }
+
+    .footer-nav, .footer-social, .footer-contact {
+        padding: 0.3rem 0;
+    }
+
+    .footer-bottom {
+        padding: 0.5rem 0;
+        font-size: 0.75rem;
+    }
+
+    .footer-logo {
+        justify-content: center;
+    }
+
+    .footer-nav h4::after,
+    .footer-connect h4::after {
         left: 50%;
         transform: translateX(-50%);
     }
 
-    .social-icons {
+    .footer-nav,
+    .footer-connect {
+        text-align: center;
+    }
+
+    .footer-nav ul {
+        align-items: center;
+    }
+
+    .footer-connect .social-icons {
         justify-content: center;
     }
 
     .footer-contact p {
         justify-content: center;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        gap: var(--space-sm);
+        text-align: center;
     }
 }
 
