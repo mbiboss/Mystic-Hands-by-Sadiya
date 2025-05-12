@@ -291,7 +291,7 @@ button, input, select, textarea {
     display: flex;
     flex-direction: column-reverse; /* Reverse so WhatsApp appears behind Messenger */
     align-items: center;
-    gap: 10px;
+    gap: 15px; /* Increased gap for better spacing */
     z-index: 100;
 }
 
