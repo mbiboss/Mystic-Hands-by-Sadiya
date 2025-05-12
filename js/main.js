@@ -168,6 +168,12 @@ function toggleTheme() {
     }
 }
 
+// Toggle Button Logic
+document.getElementById("toggle-button").addEventListener("click", function () {
+    const buttonGroup = document.querySelector(".floating-button-group");
+    buttonGroup.classList.toggle("active"); // Toggle the "active" class
+});
+
 // Toggle Mobile Menu
 function toggleMobileMenu() {
     const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
