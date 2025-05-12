@@ -17,10 +17,23 @@
 <body class="light-mode">
     <div id="particles-js"></div>
 
-    <!-- Floating WhatsApp Button -->
-    <a href="https://web.facebook.com/messages/t/112157038273284" class="messenger-button" target="_blank" rel="noopener noreferrer" aria-label="Chat on Messenger">
+<!-- Floating Button Group -->
+<div class="floating-button-group">
+    <!-- Main Button -->
+    <button class="main-button" id="toggle-button" aria-label="Toggle Buttons">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/<your-phone-number>" class="whatsapp-button hidden" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- Messenger Button -->
+    <a href="https://web.facebook.com/messages/t/112157038273284" class="messenger-button hidden" target="_blank" rel="noopener noreferrer" aria-label="Chat on Messenger">
         <i class="fa-brands fa-facebook-messenger"></i>
     </a>
+</div>
 
     <!-- Include Header -->
     <div id="header-placeholder"></div>
