@@ -283,7 +283,7 @@ button, input, select, textarea {
     display: block;
 }
 
-/* WhatsApp Button */
+/* Messenger Button */
 .messenger-button {
     position: fixed;
     bottom: var(--space-md);
