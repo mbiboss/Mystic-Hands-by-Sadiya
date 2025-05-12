@@ -283,30 +283,70 @@ button, input, select, textarea {
     display: block;
 }
 
-/* Messenger Button */
-.messenger-button {
+/* Floating Button Group */
+.floating-button-group {
     position: fixed;
     bottom: var(--space-md);
     right: var(--space-md);
+    display: flex;
+    flex-direction: column-reverse; /* Reverse so WhatsApp appears behind Messenger */
+    align-items: center;
+    gap: 10px;
+    z-index: 100;
+}
+
+.main-button {
     width: 60px;
     height: 60px;
-    border-radius: var(--radius-round);
-    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 50%;
+    background-color: #000;
+    color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
     box-shadow: var(--shadow-md);
-    z-index: 100;
-    transition: transform var(--transition-fast);
+    cursor: pointer;
+    transition: transform 0.3s ease;
 }
 
-. messenger-button:hover {
+.main-button:hover {
     transform: scale(1.1);
 }
 
-.messenger-button i {
+.whatsapp-button,
+.messenger-button {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: white;
-    font-size: 1.8rem;
+    box-shadow: var(--shadow-md);
+    cursor: pointer;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0; /* Initially hidden */
+    pointer-events: none; /* Disable interactions when hidden */
+}
+
+.whatsapp-button {
+    background-color: #25D366; /* WhatsApp green */
+}
+
+.messenger-button {
+    background-color: #0084FF; /* Messenger blue */
+}
+
+/* Show buttons when active */
+.floating-button-group.active .whatsapp-button,
+.floating-button-group.active .messenger-button {
+    opacity: 1;
+    pointer-events: auto; /* Enable interactions */
+    transform: translateY(0); /* Reset position */
+}
+
+.hidden {
+    transform: translateY(15px); /* Slightly move down when hidden */
 }
 
 /* Header */
